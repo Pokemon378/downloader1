@@ -28,7 +28,7 @@ app.post('/api/process', async (req, res) => {
     console.log(`Processing URL: ${url}`);
 
     try {
-        const cobaltResponse = await fetch('https://api.cobalt.tools/api/json', {
+        const cobaltResponse = await fetch('https://cobalt.canine.tools/api/json', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
