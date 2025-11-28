@@ -28,8 +28,8 @@ app.post('/api/process', async (req, res) => {
     console.log(`Processing URL: ${url}`);
 
     try {
-        // Using another high-uptime community instance
-        const cobaltResponse = await fetch('https://cobalt.meowing.de/api/json', {
+        // Using another high-uptime community instance (Cobalt v10)
+        const cobaltResponse = await fetch('https://cobalt.meowing.de/', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -37,10 +37,9 @@ app.post('/api/process', async (req, res) => {
             },
             body: JSON.stringify({
                 url: url,
-                vCodec: 'h264',
-                vQuality: '1080',
-                aFormat: 'mp3',
-                isAudioOnly: false
+                videoQuality: '1080',
+                audioFormat: 'mp3',
+                downloadMode: 'auto'
             })
         });
 
