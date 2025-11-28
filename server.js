@@ -28,7 +28,8 @@ app.post('/api/process', async (req, res) => {
     console.log(`Processing URL: ${url}`);
 
     try {
-        const cobaltResponse = await fetch('https://cobalt.canine.tools/api/json', {
+        // Using another high-uptime community instance
+        const cobaltResponse = await fetch('https://cobalt.meowing.de/api/json', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -43,12 +44,21 @@ app.post('/api/process', async (req, res) => {
             })
         });
 
+        if (!cobaltResponse.ok) {
+            const errorText = await cobaltResponse.text();
+            console.error(`Cobalt API Error (${cobaltResponse.status}):`, errorText);
+            return res.status(cobaltResponse.status).json({
+                status: 'error',
+                text: `Upstream API Error: ${cobaltResponse.status}`
+            });
+        }
+
         const data = await cobaltResponse.json();
         res.json(data);
 
     } catch (error) {
         console.error('Cobalt API Error:', error);
-        res.status(500).json({ status: 'error', text: 'Failed to process video via external API.' });
+        res.status(500).json({ status: 'error', text: 'Failed to connect to video processing service.' });
     }
 });
 
